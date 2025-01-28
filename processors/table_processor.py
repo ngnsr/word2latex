@@ -13,7 +13,7 @@ class TableProcessor(ElementProcessor):
 
     def process(self, element: Table):
         # there can be nested tables, and other bs
-        self.logger.logn("> process table")
+        # self.logger.logn("> process table")
         res = []
         table = element
         columnNum = 0

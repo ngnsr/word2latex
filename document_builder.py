@@ -10,7 +10,7 @@ class LatexDocumentBuilder:
 
         self.content.append("\\usepackage[utf8]{inputenc}")
         self.content.append("\\usepackage[T2A]{fontenc}")
-        self.content.append("\\usepackage[ykrainian]{babel}")
+        self.content.append("\\usepackage[ukrainian]{babel}")
 
         self.content.append("\\usepackage{graphicx}")
         self.content.append("\\usepackage{amsmath}")

@@ -9,7 +9,7 @@ class TextProcessor(ElementProcessor):
 
 
     def process(self, element):
-        self.logger.logn("> process str")
+        # self.logger.logn("> process str")
         # errors ???
         # styles:
         # {\fontfamily{lmss}\selectfont Текст у шрифті без засічок.}

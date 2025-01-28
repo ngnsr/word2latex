@@ -16,7 +16,7 @@ class ParagraphProcessor(ElementProcessor):
         self.logger = Logger()
 
     def process(self, element: Paragraph):
-        self.logger.logn('> process paragraph')
+        # self.logger.logn('> process paragraph')
         paragraph = element
         res = []
         for runHyperlink in paragraph.iter_inner_content():

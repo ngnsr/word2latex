@@ -7,7 +7,7 @@ from logger import Logger
 
 from .paragraph_processor import ParagraphProcessor
 from .table_processor import TableProcessor
-import os
+from  utils import extract_images_from_docx
 
 class WordProcessor():
     def process(self, file_path: str):
@@ -15,35 +15,14 @@ class WordProcessor():
         logger.logn(f'Start processing file with path: {file_path}')
 
         doc = Document(file_path)
-        # print(doc.element.body.xml)
-        # exit(0)
-        images = []
-        # imagesCount = 0
 
         # fonts should be tracked and added 
         builder = LatexDocumentBuilder()
 
-        # make sure out dir exists if not - create
-        output_dir = "out/img"
-        if not os.path.exists(output_dir):
-            os.makedirs(output_dir)
-        if not os.path.exists(output_dir):
-            logger.logn("can't create out directory")
-            exit(-1)
-
         # write images to out dir
-        imagesCount = 0
-        for idx, rel in enumerate(doc.part.rels):
-            if "image" in doc.part.rels[rel].target_ref:
-                image_data = doc.part.rels[rel].target_part.blob
-                images.append(image_data)
-                image_path = os.path.join(output_dir, f"img{imagesCount}.png")
-                with open(image_path, "wb") as img_file:
-                    img_file.write(image_data)
-                print(f"Image {idx} saved as {image_path}")
-                imagesCount+=1
+        output_dir = "out/img"
+        extract_images_from_docx(file_path)
 
-        logger.logn(f'Founded {images.__len__()} images.')
         paragraphProcessor = ParagraphProcessor()
         tableProcessor = TableProcessor()
 

@@ -18,7 +18,7 @@ class RunProcessor(ElementProcessor):
         self.logger = Logger()
 
     def process(self, element):
-        self.logger.logn("> process run")
+        # self.logger.logn("> process run")
 
         run = element
         result = []
