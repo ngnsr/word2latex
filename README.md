@@ -1,14 +1,14 @@
-- images:
-    + images in wrong order
-    + make DrawingProcessor singleton to keep count global
-- style hierarchy
-- math
+- [ ] styles
+- [ ] bibliography
 
-- bibliography kinda work
-- bookmarks ??? is it even neaded
+- [ ] bookmarks ? 
+- [ ] math ? 
+
+pagebreak:
+file:///home/rr/proj/word2latex/document_examples/page_break_test/word/document.xml
 
 https://github.com/python-openxml/python-docx/issues/295
-
+```xml
   <w:sdt>
     <w:sdtpr>
       <w:docpartobj>
@@ -444,6 +444,4 @@ https://github.com/python-openxml/python-docx/issues/295
       </w:p>
     </w:sdtcontent>
   </w:sdt>
-
-
-
+```

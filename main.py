@@ -7,7 +7,8 @@ if __name__ == "__main__":
 
     wordProcessor = WordProcessor()
 
-    latex_document = wordProcessor.process("/home/rr/proj/word2latex/document_examples/test.docx")
+    # latex_document = wordProcessor.process("/home/rr/proj/word2latex/document_examples/page_break_test.docx")
+    latex_document = wordProcessor.process("/home/rr/Downloads/Щоденник_практики_ЗРАЗОК.docx")
 
     with open("out/output.tex", "w") as f:
         f.write(latex_document)
