@@ -8,7 +8,7 @@ class DrawingProcessor(ElementProcessor):
 
     # make sure that images copied to output/img directory
     def process(self, element: Drawing):
-        # self.logger.logn("> process drawing")
+        self.logger.logn("> process drawing")
 
         nsmap = {
             "a": "http://schemas.openxmlformats.org/drawingml/2006/main",

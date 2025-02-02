@@ -1,4 +1,3 @@
-import logger
 from .element_processor import ElementProcessor
 from .text_processor import TextProcessor
 from .drawing_processor import DrawingProcessor
@@ -18,7 +17,7 @@ class RunProcessor(ElementProcessor):
         self.logger = Logger()
 
     def process(self, element):
-        # self.logger.logn("> process run")
+        self.logger.logn("> process run")
         run = element
         result = []
         for strDrawingPageBreak in run.iter_inner_content():

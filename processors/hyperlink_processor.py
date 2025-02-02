@@ -12,12 +12,12 @@ class HyperlinkProcessor(ElementProcessor):
 
     def process(self, element: Hyperlink):
 
-        self.logger.logn("!!!!!!!!!!!!!!!!!!! process hyperlink")
+        self.logger.logn("> process hyperlink")
         hyperlink = element
         # print(hyperlink.text)
         # check bookmarks
-        if hyperlink.fragment != None:
-            self.logger.logn(f"$$$$$$$$$$$$$$$$$$$$$$$$$$$ {hyperlink.fragment}")
+        # if hyperlink.fragment != None:
+            # self.logger.logn(f"$$$$$$$$$$$$$$$$$$$$$$$$$$$ {hyperlink.fragment}")
         # if hyperlink.url != None:
         #     self.logger.logn(f"$$$$$$$$$$$$$$$$$$$$$$$$$$$ {hyperlink.url}")
         # if hyperlink.address != None:
@@ -27,14 +27,17 @@ class HyperlinkProcessor(ElementProcessor):
             # Maybe call RunProcessor
             for c in run.iter_inner_content():
                 if isinstance(c, str):
+                    pass
                     # print("str")
-                    self.logger.logn(f"!!!!!!!!!!!!!!!!!!! {c}")
+                    # self.logger.logn(f"!!!!!!!!!!!!!!!!!!! {c}")
                 elif isinstance(c, Drawing):
-                    print("drawing")
-                    self.logger.logn(f"!!!!!!!!!!!!!!!!!!! {c}")
+                    pass
+                    # print("drawing")
+                    # self.logger.logn(f"!!!!!!!!!!!!!!!!!!! {c}")
                 elif isinstance(c, RenderedPageBreak):
-                    print("page break")
-                    self.logger.logn("c")
+                    pass
+                    # print("page break")
+                    # self.logger.logn("c")
                     # print(run)
         return f'\\href{{{hyperlink.text}}}{{{hyperlink.text}}}'
         # return f'\\hyperref[{hyperlink.text}]{{{hyperlink.text}}}'

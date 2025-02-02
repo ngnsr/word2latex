@@ -3,7 +3,9 @@ from processors import WordProcessor
 
 if __name__ == "__main__":
     logger = Logger()
+
     logger.log("Starting Word-to-LaTeX Translator")
+    logger.on()
 
     wordProcessor = WordProcessor()
 
@@ -15,4 +17,6 @@ if __name__ == "__main__":
     with open("out/output.tex", "w") as f:
         f.write(latex_document)
 
+    logger.on()
+    logger.log("Tex file saved to : out/output.tex")
     logger.log("Finish")

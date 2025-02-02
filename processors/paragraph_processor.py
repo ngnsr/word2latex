@@ -19,7 +19,7 @@ class ParagraphProcessor(ElementProcessor):
         self.logger = Logger()
 
     def process(self, element: Paragraph):
-        # self.logger.logn('> process paragraph')
+        self.logger.logn('> process paragraph')
         paragraph = element
         res = []
 
@@ -32,6 +32,7 @@ class ParagraphProcessor(ElementProcessor):
             elif name.startswith("Subtitle"):
                 text = f"\\subsection{{{text}}}"
 
+            self.logger.logn(f' -> {text}')
             return f"{text}"
 
         for runHyperlink in paragraph.iter_inner_content():
@@ -55,6 +56,8 @@ class ParagraphProcessor(ElementProcessor):
             res.append(out)
 
 
+
+        self.logger.logn(f' -> {res}')
         return "\n".join(res)
 
     def has_page_break(self, paragraph: Paragraph) -> bool:

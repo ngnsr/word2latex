@@ -27,17 +27,14 @@ class WordProcessor():
         tableProcessor = TableProcessor()
 
         for element in doc.element.body:
-            # logger.logn(f' < process {element.tag}')
+            logger.logn(f' < process {element.tag}')
             # print(element.tag)
             if element.tag.endswith("p"):
                 paragraph = Paragraph(element, doc)
-                # logger.logn(f'< process paragraph {paragraph.text}')
                 out = paragraphProcessor.process(paragraph)
-                logger.logn(out)
                 builder.add_element(out)
 
             elif element.tag.endswith("tbl"):  # Таблиця
-                # logger.logn('< process table')
                 table = Table(element, doc)
                 out = tableProcessor.process(table)
                 builder.add_element(out)
