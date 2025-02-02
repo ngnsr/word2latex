@@ -23,8 +23,9 @@ class ParagraphProcessor(ElementProcessor):
         paragraph = element
         res = []
 
+        # f smth
         # if have Heading*/subtitle return 
-        if paragraph != None and paragraph.style != None and paragraph.style.name != None and paragraph.text != '':
+        if paragraph != None and paragraph.style != None and paragraph.style.name != None and paragraph.style.name != 'normal' and paragraph.text != '':
             name = paragraph.style.name
             text = paragraph.text
             if name.startswith("Heading"):
@@ -33,7 +34,7 @@ class ParagraphProcessor(ElementProcessor):
                 text = f"\\subsection{{{text}}}"
 
             self.logger.logn(f' -> {text}')
-            return f"{text}"
+            return f"{text}\n"
 
         for runHyperlink in paragraph.iter_inner_content():
             if isinstance(runHyperlink, Run):
@@ -48,7 +49,7 @@ class ParagraphProcessor(ElementProcessor):
                 res.append(out)
                 # do smth with that
 
-        # res.append("\\n\\n")
+        res.append("\\newline")
 
         if self.has_page_break(paragraph):
             # Call RenderedPageBreakProcessor
