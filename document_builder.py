@@ -25,11 +25,4 @@ class LatexDocumentBuilder:
 
     def build(self):
         self._post_construct_document()
-        print(self.content)
-
-        
-
-        self.content = [item if item != '' else '\\newline' for item in self.content]
-
-        return "\n".join(part for part in self.content)
-        # return "\n".join(part for part in self.content if part is not None)
+        return "\n".join(item for item in self.content)

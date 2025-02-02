@@ -1,8 +1,15 @@
 - [ ] styles
+  - [ ] indentation
 - [ ] bibliography
 
 - [ ] bookmarks ? 
 - [ ] math ? 
+
+# paragraph enum/mark list ; numId -> type of list 
+<w:numPr>
+  <w:ilvl w:val="0"/>
+  <w:numId w:val="3"/>
+</w:numPr>
 
 pagebreak:
 file:///home/rr/proj/word2latex/document_examples/page_break_test/word/document.xml

@@ -30,14 +30,15 @@ class WordProcessor():
             # logger.logn(f' < process {element.tag}')
             # print(element.tag)
             if element.tag.endswith("p"):
-                # logger.logn('< process paragraph')
-                paragraph = Paragraph(element, None)
+                paragraph = Paragraph(element, doc)
+                # logger.logn(f'< process paragraph {paragraph.text}')
                 out = paragraphProcessor.process(paragraph)
+                logger.logn(out)
                 builder.add_element(out)
 
             elif element.tag.endswith("tbl"):  # Таблиця
                 # logger.logn('< process table')
-                table = Table(element, None)
+                table = Table(element, doc)
                 out = tableProcessor.process(table)
                 builder.add_element(out)
             elif element.tag.endswith("sectPr"): # end of section

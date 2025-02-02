@@ -1,3 +1,4 @@
+from types import NoneType
 from docx.text.paragraph import Paragraph
 
 from docx.text.paragraph import Paragraph
@@ -21,23 +22,38 @@ class ParagraphProcessor(ElementProcessor):
         # self.logger.logn('> process paragraph')
         paragraph = element
         res = []
+
+        # if have Heading*/subtitle return 
+        if paragraph != None and paragraph.style != None and paragraph.style.name != None and paragraph.text != '':
+            name = paragraph.style.name
+            text = paragraph.text
+            if name.startswith("Heading"):
+                text = f"\\section{{{text}}}"
+            elif name.startswith("Subtitle"):
+                text = f"\\subsection{{{text}}}"
+
+            return f"{text}"
+
         for runHyperlink in paragraph.iter_inner_content():
             if isinstance(runHyperlink, Run):
                 # Call RunProcessor
                 out = self.runProcessor.process(runHyperlink)
-                res.append(out)
+                if out != '': # ignore blank runs
+                    res.append(out)
 
             else: # is Hyperlink
                 # Call HyperlinkProcessor
                 out = self.hyperlinkProcessor.process(runHyperlink)
                 res.append(out)
                 # do smth with that
-        res.append("\\newline")
+
+        # res.append("\\n\\n")
 
         if self.has_page_break(paragraph):
             # Call RenderedPageBreakProcessor
             out = self.renderedPageBreakProcessor.process(paragraph)
             res.append(out)
+
 
         return "\n".join(res)
 

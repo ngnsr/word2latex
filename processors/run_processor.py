@@ -19,31 +19,27 @@ class RunProcessor(ElementProcessor):
 
     def process(self, element):
         # self.logger.logn("> process run")
-
         run = element
         result = []
         for strDrawingPageBreak in run.iter_inner_content():
             if isinstance(strDrawingPageBreak, str):
-                # TODO: is it even work
                 font_name = run.font.name
-                font_size = run.font.size
-                is_bold = run.bold
-                is_italic = run.italic
                 text = run.text
 
+                # Call TextProcessor
                 out = self.textProcessor.process(text)
-                if is_bold:
-                    # self.logger.logn("!!!!!!!!!!!!!!!!!bold")
+                if run.bold:
                     out = f"\\textbf{{{out}}}"
-                if is_italic:
-                    # self.logger.logn("!!!!!!!!!!!!!!!!!italic")
+                if run.italic:
                     out = f"\\textit{{{out}}}"
-                if font_name:
-                    pass
+                if run.underline:
+                    out = f"\\underline{{{out}}}"
+                if run.font.name:
+                    # ends up for every paragraph so ignore
                     # self.logger.logn(f"!!!!!!!!!!!!!!!!!font_name {font_name}")
                     # latex_text = f"{{\\fontfamily{{{font_name}}}\\selectfont {latex_text}}}"
+                    pass
 
-                # Call TextProcessor
                 result.append(out)
 
             elif isinstance(strDrawingPageBreak, Drawing):
