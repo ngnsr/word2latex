@@ -23,6 +23,9 @@ class LatexDocumentBuilder:
     def add_element(self, element):
         self.content.append(element)
 
+    def last(self):
+        return self.content[-1] if self.content else None
+
     def build(self):
         self._post_construct_document()
         return "\n".join(item for item in self.content)

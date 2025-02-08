@@ -1,3 +1,5 @@
+- [ ] enum/bullet lists
+  - [ ] make some Processor which will manage statejkjk
 - [ ] styles
   - [ ] indentation
 - [ ] bibliography

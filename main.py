@@ -5,12 +5,12 @@ if __name__ == "__main__":
     logger = Logger()
 
     logger.log("Starting Word-to-LaTeX Translator")
-    logger.on()
+    logger.off()
 
     wordProcessor = WordProcessor()
 
-    latex_document = wordProcessor.process("/home/rr/proj/word2latex/document_examples/К25_Звіт_Рісенгін.docx")
-    # latex_document = wordProcessor.process("/home/rr/proj/word2latex/document_examples/lists_example.docx")
+    # latex_document = wordProcessor.process("/home/rr/proj/word2latex/document_examples/К25_Звіт_Рісенгін.docx")
+    latex_document = wordProcessor.process("/home/rr/proj/word2latex/document_examples/lists_example.docx")
     # latex_document = wordProcessor.process("/home/rr/Downloads/Щоденник_практики_ЗРАЗОК.docx")
     # latex_document = wordProcessor.process("/home/rr/proj/word2latex/document_examples/titles_example.docx")
 

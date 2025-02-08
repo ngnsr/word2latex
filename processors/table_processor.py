@@ -32,7 +32,7 @@ class TableProcessor(ElementProcessor):
             # cellCounter = 0
             for idx, cell in enumerate(row.cells):
                 for paragraph in cell.paragraphs:
-                    # should use includegraphics
+                    # TODO: process enum/bullet lists
                     out = self.paragraphProcessor.process(paragraph).removesuffix("\n").removesuffix("\\newline")
                     if idx  < columnNum - 1: out = out + " & " 
                     # self.logger.logn(out)

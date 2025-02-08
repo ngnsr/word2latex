@@ -14,5 +14,5 @@ def extract_images_from_docx(docx_file, output_dir="out/img"):
 
             with docx_zip.open(media_file) as source, open(output_path, 'wb') as target:
                 target.write(source.read())
-                print(f"Image {filename} saved to {output_path}")
+                # print(f"Image {filename} saved to {output_path}")
 

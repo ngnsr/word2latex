@@ -9,4 +9,5 @@ from .word_processor import WordProcessor
 from .text_processor import TextProcessor
 from .run_processor import RunProcessor
 from .hyperlink_processor import HyperlinkProcessor
+from .list_processor import ListProcessor
 from .rendered_page_break_processor import RenderedPageBreakProcessor

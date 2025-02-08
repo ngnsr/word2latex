@@ -23,7 +23,6 @@ class ParagraphProcessor(ElementProcessor):
         paragraph = element
         res = []
 
-        # f smth
         # if have Heading*/subtitle return 
         if paragraph != None and paragraph.style != None and paragraph.style.name != None and paragraph.style.name != 'normal' and paragraph.text != '':
             name = paragraph.style.name
