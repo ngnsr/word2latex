@@ -65,5 +65,12 @@ class WordProcessor():
 
             else:
                 logger.errn(f'Unsuported tag: {element.tag}')
+
+        if list_paragraphs: # Process last list. Prob should check for bibliography and do smth else
+            # Call ListProcessor
+            out = self.listProcessor.process(list_paragraphs, doc) + "\n"
+            list_paragraphs.clear()
+            builder.add_element(out)
+
                 
         return builder.build()
