@@ -42,12 +42,10 @@ class WordProcessor():
                 # list = ListProcessor.is_list(paragraph, doc)
                 list = ListProcessor.is_list(paragraph, doc)
                 if list != None:
-                    # print("inside")
                     list_paragraphs.append(paragraph)
                 else:
                     out = paragraphProcessor.process(paragraph)
                     if list_paragraphs:
-                        # print("called")
                         # Call ListProcessor
                         out = self.listProcessor.process(list_paragraphs, doc) + "\n" + out
                         list_paragraphs.clear()

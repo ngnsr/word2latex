@@ -23,14 +23,16 @@ class ParagraphProcessor(ElementProcessor):
         paragraph = element
         res = []
 
+
         # if have Heading*/subtitle return 
         if paragraph != None and paragraph.style != None and paragraph.style.name != None and paragraph.style.name != 'normal' and paragraph.text != '':
+            self.logger.logn('# process header')
             name = paragraph.style.name
             text = paragraph.text
             if name.startswith("Heading"):
-                text = f"\\section{{{text}}}"
+                text = f"\\newpage\n\\section{{{text}}}"
             elif name.startswith("Subtitle"):
-                text = f"\\subsection{{{text}}}"
+                text = f"\\newpage\\subsection{{{text}}}"
 
             self.logger.logn(f' -> {text}')
             return f"{text}\n"
@@ -51,11 +53,10 @@ class ParagraphProcessor(ElementProcessor):
         res.append("\\newline")
 
         if self.has_page_break(paragraph):
+            self.logger.logn('# process page break')
             # Call RenderedPageBreakProcessor
             out = self.renderedPageBreakProcessor.process(paragraph)
             res.append(out)
-
-
 
         self.logger.logn(f' -> {res}')
         return "\n".join(res)

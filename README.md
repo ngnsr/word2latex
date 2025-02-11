@@ -1,20 +1,15 @@
+TODO:
+- [ ] fix page break issues cos heading
+- [ ] fix inner lists issues
+
 - [ ] enum/bullet lists
-  - [ ] make some Processor which will manage statejkjk
+  - [x] make some Processor which will manage state
 - [ ] styles
   - [ ] indentation
 - [ ] bibliography
 
 - [ ] bookmarks ? 
 - [ ] math ? 
-
-# paragraph enum/mark list ; numId -> type of list 
-<w:numPr>
-  <w:ilvl w:val="0"/>
-  <w:numId w:val="3"/>
-</w:numPr>
-
-pagebreak:
-file:///home/rr/proj/word2latex/document_examples/page_break_test/word/document.xml
 
 https://github.com/python-openxml/python-docx/issues/295
 ```xml

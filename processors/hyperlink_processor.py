@@ -14,7 +14,7 @@ class HyperlinkProcessor(ElementProcessor):
 
         self.logger.logn("> process hyperlink")
         hyperlink = element
-        # print(hyperlink.text)
+        # print("#################",hyperlink.address)
         # check bookmarks
         # if hyperlink.fragment != None:
             # self.logger.logn(f"$$$$$$$$$$$$$$$$$$$$$$$$$$$ {hyperlink.fragment}")
