@@ -25,7 +25,7 @@ class ParagraphProcessor(ElementProcessor):
 
 
         # if have Heading*/subtitle return 
-        if paragraph != None and paragraph.style != None and paragraph.style.name != None and paragraph.style.name != 'normal' and paragraph.text != '':
+        if paragraph != None and paragraph.style != None and paragraph.style.name != None and paragraph.style.name.lower() != 'normal' and paragraph.text != '':
             self.logger.logn('# process header')
             name = paragraph.style.name
             text = paragraph.text

@@ -50,4 +50,4 @@ class RunProcessor(ElementProcessor):
                 out = self.renderedPageBreakProcessor.process(strDrawingPageBreak)
                 result.append(out)
 
-        return "\n".join(result) + "\n"
+        return "".join(result)
