@@ -23,9 +23,9 @@ class ListProcessor(ElementProcessor):
         if not self._initialized:
             self.logger = Logger()
             self.stack = []
+            self._initialized = True
             self.hyperlinkProcessor = HyperlinkProcessor()
             self.runProcessor = RunProcessor()
-            self._initialized = True
 
     # paragraphs should contain list items
     def process(self, paragraphs, doc):
@@ -36,36 +36,39 @@ class ListProcessor(ElementProcessor):
             list_info = self.is_list(paragraph, doc)
 
             if list_info:
-                level, is_numbered = list_info
+                num_id, level, is_numbered = list_info
 
-                while self.stack and self.stack[-1][0] > level:
+                while (self.stack and self.stack[-1][0] > level) or (self.stack.__len__() >= 2 and self.stack[-2][2] == num_id):
                     result.append(f"\\end{{{self.stack.pop()[1]}}}")
 
-                if not self.stack or self.stack[-1][0] < level:
+                if not self.stack or (self.stack and self.stack[-1][0] < level or self.stack[-1][2] != num_id):
                     list_type = "enumerate" if is_numbered else "itemize"
                     result.append(f"\\begin{{{list_type}}}")
-                    self.stack.append((level, list_type))
+                    self.stack.append((level, list_type, num_id))
 
                 # TODO: hypenetion
-                out = ''
-                for runHyperlink in paragraph.iter_inner_content():
-                    if isinstance(runHyperlink, Run):
-                        # Call RunProcessor
-                        r = self.runProcessor.process(runHyperlink)
-                        if r != '': # ignore blank runs
-                            out = out + "\n" + r
+                result.append(f"\\item {self.processInner(paragraph)}")
 
-                    else: # is Hyperlink
-                        # Call HyperlinkProcessor
-                        r = self.hyperlinkProcessor.process(runHyperlink)
-                        out = out + "\n" + r
-
-                result.append(f"\\item {out}")
 
         while self.stack:
             result.append(f"\\end{{{self.stack.pop()[1]}}}")
 
         return "\n".join(result) + "\n"
+
+    def processInner(self, paragraph):
+        out = ''
+        for runHyperlink in paragraph.iter_inner_content():
+            if isinstance(runHyperlink, Run):
+                # Call RunProcessor
+                r = self.runProcessor.process(runHyperlink)
+                if r != '': # ignore blank runs
+                    out = out + "\n" + r
+
+            else: # is Hyperlink
+                # Call HyperlinkProcessor
+                r = self.hyperlinkProcessor.process(runHyperlink)
+                out = out + "\n" + r
+        return out
 
     @staticmethod
     def is_list(paragraph: Paragraph, doc: Document):
@@ -86,7 +89,7 @@ class ListProcessor(ElementProcessor):
                 numFmt = firstLvl.find("{http://schemas.openxmlformats.org/wordprocessingml/2006/main}numFmt") 
                 fmt = numFmt.attrib['{http://schemas.openxmlformats.org/wordprocessingml/2006/main}val']
                 # level is indentation level from 0 to 8, 0 is first level (\t●)
-                return level, fmt == "decimal"
+                return num_id, level, fmt == "decimal"
 
         # why a u here bruh
         return None

@@ -1,8 +1,5 @@
 TODO:
-- [ ] fix page break issues cos heading
-- [ ] fix inner lists issues
-
-- [ ] enum/bullet lists
+- [x] enum/bullet lists
   - [x] make some Processor which will manage state
 - [ ] styles
   - [ ] indentation
