@@ -25,7 +25,7 @@ class ParagraphProcessor(ElementProcessor):
 
 
         # if have Heading*/subtitle return 
-        if paragraph != None and paragraph.style != None and paragraph.style.name != None and paragraph.style.name.lower() != 'normal' and paragraph.text != '':
+        if self.has_title(paragraph):
             self.logger.logn('# process header')
             name = paragraph.style.name
             text = paragraph.text
@@ -61,9 +61,16 @@ class ParagraphProcessor(ElementProcessor):
         self.logger.logn(f' -> {res}')
         return "\n".join(res)
 
-    def has_page_break(self, paragraph: Paragraph) -> bool:
+    @staticmethod
+    def has_page_break(paragraph: Paragraph) -> bool:
         xml_content = paragraph._element
         for br in xml_content.findall(".//w:br", namespaces=xml_content.nsmap):
             if br.get("{%s}type" % xml_content.nsmap["w"]) == "page":
                 return True
         return False
+
+    @staticmethod
+    def has_title(paragraph: Paragraph) -> bool:
+        return paragraph != None and paragraph.style != None and \
+            paragraph.style.name != None and paragraph.style.name.lower() != 'normal' and paragraph.text != ''
+

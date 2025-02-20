@@ -20,10 +20,8 @@ def unicode_to_latex(s):
         ch = s[pos]
         o = ord(ch)
         if (o >= 65 and  o <= 90) or (o >= 97 and o <= 122) or (ch in "\n\r\t"):
-            if o == ord("_"): print("heeeeeeeeeeeeeeeeeeeeeeeeeeeeel")
             latex += ch
         elif o in uni2latex:
-            # print("heeeeeeeeeel")
             latex += "{" + uni2latex.get(o) + "}"
         else: 
             do_warn_unknown_char(ch)

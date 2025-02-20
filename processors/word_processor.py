@@ -11,6 +11,8 @@ from .table_processor import TableProcessor
 from .list_processor import ListProcessor
 from  utils import extract_images_from_docx
 
+import ollama
+
 class WordProcessor():
 
     def __init__(self):
@@ -32,12 +34,28 @@ class WordProcessor():
         paragraphProcessor = ParagraphProcessor()
         tableProcessor = TableProcessor()
         list_paragraphs = []
+        first_page_processed = False
+        page_paragraphs = []
 
         for element in doc.element.body:
             logger.logn(f' < process {element.tag}')
-            # print(element.tag)
             if element.tag.endswith("p"):
                 paragraph = Paragraph(element, doc)
+
+                if not first_page_processed:
+                    if ParagraphProcessor.has_page_break(paragraph) or ParagraphProcessor.has_title(paragraph):
+                        print('process page: ')
+                        print(page_paragraphs)
+                        latex = self.process_first_page(page_paragraphs, builder)
+                        print('----------')
+                        print(latex)
+                        if latex:
+                            builder.add_element(latex)
+                        first_page_processed = True
+                    else:
+                        page_paragraphs.append(paragraph.text)
+
+                    continue
 
                 # list = ListProcessor.is_list(paragraph, doc)
                 list = ListProcessor.is_list(paragraph, doc)
@@ -72,3 +90,32 @@ class WordProcessor():
 
                 
         return builder.build()
+
+    def process_first_page(self, page_paragraphs, builder):
+        if not page_paragraphs:
+            return
+        
+        page_text = "\n".join(page_paragraphs)
+        
+        check_prompt = (
+            "Is the following text a title page? A title page typically appears at the beginning of a document and includes elements like institution name, course title, author(s), document type, and date. "
+            "Reply only with 'true' or 'false'.\n\n" + page_text
+        )
+        
+        check_response = ollama.chat(model="phi3", messages=[{"role": "user", "content": check_prompt}], options={"temperature": 0.2})
+        print(check_response.get("message", {}).get("content", "false"))
+        is_title_page = check_response.get("message", {}).get("content", "false").strip().lower().startswith("true")
+        
+        if is_title_page:
+            generate_prompt = ("Generate a properly formatted LaTeX title page using the following text as content. "
+                               "Ensure the output includes a structured layout with title, author(s), institution, and date, following LaTeX conventions. "
+                               "Preserve formatting details that are relevant and structure them appropriately in LaTeX. "
+                               "Ensure that the generated title page properly reflects the document type (e.g., lab report, dissertation, or academic paper).\n\n" + page_text)
+            
+            response = ollama.chat(model="phi3", messages=[{"role": "user", "content": generate_prompt}])
+            latex_output = response.get("message", {}).get("content", "")
+            
+            if latex_output:
+                builder.add_element(latex_output)
+            else:
+                builder.add_element(page_text) # TODO: rm -rf /
