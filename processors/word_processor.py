@@ -11,12 +11,15 @@ from .table_processor import TableProcessor
 from .list_processor import ListProcessor
 from  utils import extract_images_from_docx
 
+import shutil
+
 class WordProcessor():
 
-    def __init__(self):
-        self.listProcessor = ListProcessor()
+    # def __init__(self):
+    #     self.listProcessor = ListProcessor()
 
-    def process(self, file_path: str):
+    @staticmethod
+    def process(file_path: str):
         logger = Logger()
         logger.logn(f'Start processing file with path: {file_path}')
 
@@ -26,11 +29,12 @@ class WordProcessor():
         builder = LatexDocumentBuilder()
 
         # write images to out dir
-        output_dir = "out/img"
-        extract_images_from_docx(file_path, output_dir)
+        output_dir = "out"
+        extract_images_from_docx(file_path, output_dir=output_dir+'/img')
 
         paragraphProcessor = ParagraphProcessor()
         tableProcessor = TableProcessor()
+        listProcessor = ListProcessor()
         list_paragraphs = []
 
         for element in doc.element.body:
@@ -47,7 +51,7 @@ class WordProcessor():
                     out = paragraphProcessor.process(paragraph)
                     if list_paragraphs:
                         # Call ListProcessor
-                        out = self.listProcessor.process(list_paragraphs, doc) + "\n" + out
+                        out = listProcessor.process(list_paragraphs, doc) + "\n" + out
                         list_paragraphs.clear()
 
                     builder.add_element(out)
@@ -66,9 +70,13 @@ class WordProcessor():
 
         if list_paragraphs: # Process last list. Prob should check for bibliography and do smth else
             # Call ListProcessor
-            out = self.listProcessor.process(list_paragraphs, doc) + "\n"
+            out = listProcessor.process(list_paragraphs, doc) + "\n"
             list_paragraphs.clear()
             builder.add_element(out)
 
-                
-        return builder.build()
+        latex_document = builder.build()
+        with open("out/output.tex", "w") as f:
+            f.write(latex_document)                
+        archive_path = shutil.make_archive("out", "zip", output_dir)
+
+        return archive_path
