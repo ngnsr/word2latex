@@ -9,14 +9,25 @@ from .hyperlink_processor import HyperlinkProcessor
 from .run_processor import RunProcessor
 from .rendered_page_break_processor import RenderedPageBreakProcessor
 from logger import Logger
+import threading
 
 class ParagraphProcessor(ElementProcessor):
+    _instance = None
+    _lock = threading.Lock()
+
+    def __new__(cls):
+        with cls._lock:
+            if cls._instance is None:
+                cls._instance = super(ParagraphProcessor, cls).__new__(cls)
+                cls._instance._initialized = False
+        return cls._instance
 
     def __init__(self):
-        self.hyperlinkProcessor = HyperlinkProcessor()
-        self.runProcessor = RunProcessor()
-        self.renderedPageBreakProcessor = RenderedPageBreakProcessor()
-        self.logger = Logger()
+        if not self._initialized:
+            self.hyperlinkProcessor = HyperlinkProcessor()
+            self.runProcessor = RunProcessor()
+            self.renderedPageBreakProcessor = RenderedPageBreakProcessor()
+            self.logger = Logger()
 
     def process(self, element: Paragraph):
         self.logger.logn('> process paragraph')
