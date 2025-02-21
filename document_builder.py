@@ -28,4 +28,13 @@ class LatexDocumentBuilder:
 
     def build(self):
         self._post_construct_document()
-        return "\n".join(item for item in self.content)
+        # remove extra '\newline'
+        result = []
+        prev = None
+        for e in self.content:
+            if e != '\\newline' or prev != '\\newline':
+                result.append(e)
+            prev = e
+            # return result
+
+        return "\n".join(item for item in result)

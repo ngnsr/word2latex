@@ -30,14 +30,15 @@ class TableProcessor(ElementProcessor):
         for row in table.rows:
             res.append('\\hline')
             # cellCounter = 0
+
+            out = ''
             for idx, cell in enumerate(row.cells):
                 for paragraph in cell.paragraphs:
                     # TODO: process enum/bullet lists
-                    out = self.paragraphProcessor.process(paragraph).removesuffix("\n").removesuffix("\\newline")
+                    out = out + self.paragraphProcessor.process(paragraph).removesuffix("\\newline")
                     if idx  < columnNum - 1: out = out + " & " 
                     # self.logger.logn(out)
-                    res.append(out)
-            res.append('\\\\')
+            res.append(out.replace('\n', '') + ' \\\\')
                     
         res.append("\\hline")
         res.append("\\end{tabular}")
