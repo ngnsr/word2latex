@@ -59,7 +59,6 @@ class ParagraphProcessor(ElementProcessor):
                 # Call HyperlinkProcessor
                 out = self.hyperlinkProcessor.process(runHyperlink)
                 res.append(out)
-                # do smth with that
 
         res.append("\\newline")
 

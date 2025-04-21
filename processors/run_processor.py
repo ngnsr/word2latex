@@ -34,9 +34,7 @@ class RunProcessor(ElementProcessor):
                 if run.underline:
                     out = f"\\underline{{{out}}}"
                 if run.font.name:
-                    # ends up for every paragraph so ignore
-                    # self.logger.logn(f"!!!!!!!!!!!!!!!!!font_name {font_name}")
-                    # latex_text = f"{{\\fontfamily{{{font_name}}}\\selectfont {latex_text}}}"
+                    # TODO: process fonts
                     pass
 
                 result.append(out)

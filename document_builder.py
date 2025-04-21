@@ -35,6 +35,5 @@ class LatexDocumentBuilder:
             if e != '\\newline' or prev != '\\newline':
                 result.append(e)
             prev = e
-            # return result
 
         return "\n".join(item for item in result)
