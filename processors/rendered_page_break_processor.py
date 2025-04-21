@@ -5,7 +5,6 @@ class RenderedPageBreakProcessor(ElementProcessor):
 
     def __init__(self):
         self.logger = Logger()
-        # pass
 
     def process(self, element):
         self.logger.logn("> process pagebreak")

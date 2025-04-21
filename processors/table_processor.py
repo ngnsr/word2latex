@@ -12,7 +12,6 @@ class TableProcessor(ElementProcessor):
 
 
     def process(self, element: Table):
-        # there can be nested tables, and other bs
         self.logger.logn("> process table")
         res = []
         table = element
@@ -29,19 +28,14 @@ class TableProcessor(ElementProcessor):
         res.append("\\begin{tabular}{" + "|l"*columnNum + "|}")
         for row in table.rows:
             res.append('\\hline')
-            # cellCounter = 0
-
             out = ''
             for idx, cell in enumerate(row.cells):
                 for paragraph in cell.paragraphs:
                     # TODO: process enum/bullet lists
                     out = out + self.paragraphProcessor.process(paragraph).removesuffix("\\newline")
                     if idx  < columnNum - 1: out = out + " & " 
-                    # self.logger.logn(out)
             res.append(out.replace('\n', '') + ' \\\\')
                     
         res.append("\\hline")
         res.append("\\end{tabular}")
-
-
         return '\n'.join(res)
