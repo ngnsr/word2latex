@@ -1,0 +1,5 @@
+python-docx
+argparse; python_version < "3.2"  # only needed for Python < 3.2, otherwise built-in
+
+# Optional dependencies
+# streamlit # Uncomment if you plan to use the web interface
